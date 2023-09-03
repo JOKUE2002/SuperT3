@@ -40,7 +40,7 @@ const queue = []
 io.on('connection', (socket) => {
 
     socket.on('start', (data) => {
-        console.log('START', data);
+        //console.log('START', data);
 
         if (data.isPVP) {
             const queueFirst = queue.shift()
@@ -55,12 +55,12 @@ io.on('connection', (socket) => {
             socket.emit('error', 'PVC not implemented')
         }
 
-        console.log('DEBUG', games)
-        console.log('DEBUG', queue)
+        //console.log('DEBUG', games)
+        //console.log('DEBUG', queue)
     });
 
     socket.on('move', (move) => {
-        console.log('MOVE', move)
+        //console.log('MOVE', move)
 
         const game = games.find(e => e.players.includes(move.uuid))
 
@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
             default: break;
         }
 
-        console.log('DEBUG', games)
+        //console.log('DEBUG', games)
 
         io.emit('move', games.find(e => e.players.includes(move.uuid)))
 
@@ -118,12 +118,12 @@ function checkWin(subgame, moves) {
     const xMoves = moves.filter((_, i) => i % 2 === 0).filter(e => e.startsWith(subgame))
     const oMoves = moves.filter((_, i) => i % 2 !== 0).filter(e => e.startsWith(subgame))
 
-    console.log(xMoves, oMoves)
+    //console.log(xMoves, oMoves)
 
     const xString = xMoves.map(e => parseInt(e.charAt(1))).sort().join('')
     const oString = oMoves.map(e => parseInt(e.charAt(1))).sort().join('')
 
-    console.log(xString, oString)
+    //console.log(xString, oString)
 
     let xWon = winningMoves.includes(xString)
     let oWon = winningMoves.includes(oString)
@@ -134,7 +134,7 @@ function checkWin(subgame, moves) {
         oWon |= parts.map(p => oString.includes(p)).every(e => e)
     })
 
-    console.log(xWon, oWon)
+    //console.log(xWon, oWon)
 
     if (xWon)
         return 'X'
