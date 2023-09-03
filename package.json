@@ -1,0 +1,28 @@
+{
+  "name": "super-tic-tac-toe",
+  "version": "1.0.0",
+  "description": "TicTacToe - but bigger",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokue2002/SuperT3.git"
+  },
+  "author": "Jonas Kuehn (@jokue2002)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jokue2002/SuperT3/issues"
+  },
+  "homepage": "https://github.com/jokue2002/SuperT3#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "socket.io": "^4.7.2"
+  }
+}
