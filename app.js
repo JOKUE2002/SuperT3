@@ -110,8 +110,8 @@ io.on('connection', (socket) => {
     //socket.emit('')
 });
 
-server.listen(process.env.PORT ?? 3000, () => {
-    console.log(`SuperT3 listening on http://localhost:${process.env.PORT ?? 3000}`);
+server.listen(process.env.PORT || 3000, () => {
+    console.log(`SuperT3 listening on http://localhost:${process.env.PORT || 3000}`);
 });
 
 function checkWin(subgame, moves) {
