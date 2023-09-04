@@ -107,6 +107,18 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('forfeit', ({uuid}) => {
+        const game = games.find(e => e.players.includes(uuid))
+
+        if (game) {
+            const winningPlayer = game.players.indexOf(uuid) === 0 ? 'O' : 'X'
+            io.emit('gameover', {players: game.players, result: {winner: winningPlayer, sequence: null}})
+
+            const idx = games.indexOf(e => e.players.includes(move.uuid))
+            games.splice(idx, 1)
+        }
+    })
+
     //socket.emit('')
 });
 
@@ -147,10 +159,6 @@ function checkWin(subgame, moves) {
 function checkGameOver(wonSubgames) {
     const xWins = wonSubgames[0].join('')
     const oWins = wonSubgames[1].join('')
-
-    if ((xWins.length + oWins.length) >= 9) {
-        return {winner: 'T', sequence: null}
-    }
 
     let xWon = winningMoves.includes(xWins)
     let oWon = winningMoves.includes(oWins)

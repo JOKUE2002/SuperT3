@@ -72,8 +72,9 @@
             border: 1px solid var(--text-secondary);
             background-color: var(--text-primary);
             color: var(--bg-secondary);
-            padding: 0.5rem;
+            padding: 0.75rem;
             border-radius: 0.5rem;
+            font-size: large;
 
             cursor: pointer;
             transition: all 250ms ease-in-out;
@@ -91,7 +92,13 @@
 
         .ownColor {
             position: absolute;
-            top: 2rem;
+            top: 2.5rem;
+            right: 1rem;
+        }
+
+        .forfeit {
+            position: absolute;
+            bottom: 1rem;
             right: 1rem;
         }
     </style>
@@ -283,7 +290,7 @@
 
         <div class="gameStart" id="gameStartArea" style="display: none">
             <button onclick="startGame(true)">PvP</button>
-            <button onclick="startGame(false)">PvC</button>
+            <!--<button onclick="startGame(false)">PvC</button>-->
         </div>
 
         <span class="infos" id="infos"></span>
@@ -291,6 +298,8 @@
         <span class="status" id="status">Loading</span>
 
         <span class="ownColor" id="ownColor"></span>
+
+        <button class="forfeit" id="forfeit" onclick="forfeit()" style="display: none">Forfeit</button>
     </main>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -327,6 +336,7 @@
 
             setStatus('Game running')
             document.getElementById('ownColor').innerHTML = `My piece: <b>${myColor}</b>`
+            document.getElementById('forfeit').style.display = 'block'
 
             if (canMove)
                 markAllLegalMoves()
@@ -369,6 +379,7 @@
             canMove = false
             opponent = null
             document.getElementById('gameStartArea').style.display = 'flex';
+            document.getElementById('forfeit').style.display = 'none'
         })
 
         function cellClicked(element) {
@@ -430,6 +441,9 @@
         }
 
         function markWinningSequence(sequence) {
+            if (!sequence)
+                return
+
             const parts = sequence.split('');
 
             [...document.querySelectorAll('td.subgame')]
@@ -448,6 +462,10 @@
                 if ([...e.classList].includes('cell'))
                     e.innerText = ''
             })
+        }
+
+        function forfeit() {
+            socket.emit('forfeit', {uuid: uuid})
         }
 
 
